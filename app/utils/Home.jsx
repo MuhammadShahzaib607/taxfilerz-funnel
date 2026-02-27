@@ -6,6 +6,7 @@ import FeaturesSection from "../components/ads-home-components/FeaturesSection"
 import DashboardFeature from "../components/ads-home-components/DashboardFeature"
 import InvoiceShowcase from "../components/ads-home-components/InvoiceShowcase"
 import FinanceFeatures from "../components/ads-home-components/FinanceFeatures"
+import UrgencyBanner from "../components/ads-home-components/UrgencyBanner"
 import AccessibilitySection from "../components/ads-home-components/AccessibilitySection"
 import SolutionSection from "../components/ads-home-components/SolutionSection"
 import PricingFunnel from "../components/ads-home-components/PricingFunnel"
@@ -24,6 +25,7 @@ const HomeComp = () => {
  <FeaturesSection /> 
  <InvoiceShowcase />
  <FinanceFeatures /> 
+ <UrgencyBanner />
  <AccessibilitySection />
  <SolutionSection />
  <PricingFunnel />
