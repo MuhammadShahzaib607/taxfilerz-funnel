@@ -144,7 +144,7 @@ export default function TaxFilerzDashboard() {
         <div className="flex items-center justify-between mb-12 px-2 z-10">
           {isSidebarOpen && (
             <div className="flex flex-col">
-                <Link href="/" className="text-xl font-black tracking-tighter leading-none">Byte Digital Studio</Link>
+                <Link href="/" className="text-xl font-black tracking-tighter leading-none">TaxFilerz & Co.</Link>
             </div>
           )}
           <button onClick={() => setSidebarOpen(!isSidebarOpen)} className="p-2 bg-white/5 hover:bg-white/10 rounded-xl transition-colors cursor-pointer">
