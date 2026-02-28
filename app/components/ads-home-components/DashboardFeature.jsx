@@ -55,7 +55,7 @@ const DashboardFeature = () => {
 
               {/* Action Button */}
               <button className="px-10 py-4 bg-[#1D2F52] text-white rounded-2xl font-bold text-lg hover:bg-[#F22A5C] transition-all duration-300 shadow-xl shadow-[#1D2F52]/20 group">
-                <Link href="/lead-form">Start Your Free Trial <span className="inline-block group-hover:translate-x-1 transition-transform ml-2">→</span></Link>
+                <a href="/">Start Your Free Trial <span className="inline-block group-hover:translate-x-1 transition-transform ml-2">→</span></a>
               </button>
             </motion.div>
           </div>

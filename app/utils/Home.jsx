@@ -28,7 +28,7 @@ const HomeComp = () => {
  <UrgencyBanner />
  <AccessibilitySection />
  <SolutionSection />
- <PricingFunnel />
+ {/* <PricingFunnel /> */}
  <FinalCTA />
  <Footer /> 
  </>

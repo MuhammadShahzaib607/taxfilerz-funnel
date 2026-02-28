@@ -289,54 +289,54 @@ const serviceData = {
     ]
   }
 ],
-    taxlegal: [
-    {
-      id: 'tl1',
-      name: "Basic Compliance Support",
-      price: 5000,
-      subtitle: "Small businesses, startups, freelancers, and professionals",
-      features: [
-        "NTN / Tax Registration Support",
-        "Income Tax Return Filing",
-        "Sales Tax Nill Filing Services",
-      ]
-    },
-    {
-      id: 'tl2',
-      name: "Standard Compliance & Advisory",
-      price: 25000,
-      subtitle: "SMEs, growing companies, traders, and GST registrants",
-      features: [
-        "NTN / Tax Registration Support",
-        "Income Tax Return Filing",
-        "Sales Tax Return Filling",
-        "WHT (Withholding Tax)",
-        "Quarterly Planning",
-        "Input/Output Tax Reconciliation",
-        "Compliance Notices Support",
-      ]
-    },
-    {
-      id: 'tl3',
-      name: "Advanced Compliance & Risk Protection",
-      price: 49999,
-      discountedPrice: 34999,
-      subtitle: "Large businesses, manufacturers, exporters, multi-entity operations",
-      features: [
-        "NTN / Tax Registration Support",
-        "Income Tax Return Filing",
-        "Sales Tax Return Filling",
-        "WHT (Withholding Tax)",
-        "Quarterly Planning",
-        "Input/Output Tax Reconciliation",
-        "Compliance Notices Support",
-        "Audit & Tax Law Response",
-        "Dedicated Compliance Manager",
-        "Advance Tax Strategy",
-      ]
-    }
-  ],
-  taxlegal: [
+    taxComplianceServices: [
+  {
+    id: 'tcs1',
+    name: "Basic Compliance Support",
+    price: 5000,
+    subtitle: "Small businesses, startups, freelancers, and professionals",
+    features: [
+      "NTN / Tax Registration Support",
+      "Income Tax Return Filing",
+      "Sales Tax Nill Filing Services"
+    ]
+  },
+  {
+    id: 'tcs2',
+    name: "Standard Compliance & Advisory",
+    price: 25000,
+    subtitle: "SMEs, growing companies, traders, and GST registrants",
+    features: [
+      "NTN / Tax Registration Support",
+      "Income Tax Return Filing",
+      "Sales Tax Filing Services",
+      "WHT (Withholding Tax)",
+      "Quarterly Planning",
+      "Input/Output Tax Reconciliation",
+      "Compliance Notices Support"
+    ]
+  },
+  {
+    id: 'tcs3',
+    name: "Advanced Compliance & Risk Protection",
+    price: 49999,
+    discountedPrice: 34999,
+    subtitle: "Large businesses, manufacturers, exporters, multi-entity operations",
+    features: [
+      "NTN / Tax Registration Support",
+      "Income Tax Return Filing",
+      "Sales Tax Filing Services",
+      "WHT (Withholding Tax)",
+      "Quarterly Planning",
+      "Input/Output Tax Reconciliation",
+      "Compliance Notices Support",
+      "Audit & Tax Law Response",
+      "Dedicated Compliance Manager",
+      "Advance Tax Strategy"
+    ]
+  }
+],
+  taxlegalConsultancy: [
   {
     id: 'tl1',
     name: "Basic Compliance Support",

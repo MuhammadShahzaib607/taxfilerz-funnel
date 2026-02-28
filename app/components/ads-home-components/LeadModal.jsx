@@ -107,7 +107,8 @@ const LeadModal = () => {
                     <option value="bookkeeping">Bookkeeping Virtual Assistant</option>
                     <option value="software">TaxFilerz – Accounting Software Packages</option>
                     <option value="bundles">TaxFilerz – All in One Accounting Software & Bookkeeping Packages</option>
-                    <option value="taxlegal">Tax compliance Services Package.</option>
+                    <option value="taxComplianceServices">Tax Compliance Services Package</option>
+                    <option value="taxlegalConsultancy">Tax Consultancy</option>
                   </select>
                   <HiChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 text-white pointer-events-none" size={20} />
                 </div>
@@ -190,7 +191,9 @@ const LeadModal = () => {
                         {/* Extra / Financial Services */}
                         {(p.extra || p.financialServices) && (
                           <div className="pt-3 border-t border-gray-100">
-                              <p className="text-[9px] font-black text-red-500 uppercase mb-2">Add-ons & Advisory</p>
+                              <p className="text-[11px] font-black text-red-500 uppercase mb-2">
+                                {p.subtitle === "Suitable for turnover 10+ crore annually." || p.subtitle === "Digital Invoice + Purchase + Inventory + Production + Finance + Bookkeeping Pkg" ? "Not Charged: Save Rs. 200,000" : "Add-ons & Advisory"}
+                              </p>
                               <ul className="space-y-1">
                                {(p.extra || p.financialServices).map((ex, i) => (
                                  <li key={i} className="text-[9px] text-gray-500 font-bold flex gap-2 italic items-start"><HiPlusCircle className="text-gray-300 shrink-0" size={12}/> {ex}</li>

@@ -73,10 +73,6 @@ const ServicesSection = () => {
                   {service.description}
                 </p>
                 
-                {/* Highlighted Button-like Link */}
-                <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-gray-50 text-[#1D2F52] group-hover:bg-[#1D2F52] group-hover:text-white font-bold text-sm transition-all duration-300">
-                  Explore Service <span>→</span>
-                </div>
               </div>
 
               {/* Bottom Subtle Gradient Flare */}

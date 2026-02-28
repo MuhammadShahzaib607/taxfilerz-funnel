@@ -37,7 +37,7 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'Form', href: '/lead-form' },
+    { name: 'Form', href: '/' },
     { name: 'AI Assistant', href: '/chatbot' },
     { name: 'Contact', href: '/contact' },
   ];
@@ -107,9 +107,9 @@ const Navbar = () => {
 
             {/* Desktop Button */}
             <div className="hidden md:block">
-              <Link href="/lead-form" className="bg-[#1D2F52] hover:bg-[#F22A5C] text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all shadow-lg hover:shadow-[#F22A5C]/20 active:scale-95">
+              <a href="/" className="bg-[#1D2F52] hover:bg-[#F22A5C] text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all shadow-lg hover:shadow-[#F22A5C]/20 active:scale-95">
                 Request Proposal
-              </Link>
+              </a>
             </div>
 
             {/* Mobile Menu Button */}

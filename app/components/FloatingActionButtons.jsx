@@ -38,7 +38,7 @@ const FloatingActionButtons = () => {
       setTimeout(() => {
         addMessage(`Excellent choice. We have specialized plans for ${option}. Pick one to see the full breakdown:`, 'bot');
         setCurrentStage('plans');
-      }, 600);
+      }, 600);  
     } else if (currentStage === 'plans') {
       addMessage(`Show me details for "${option}".`, 'user');
       setTimeout(() => {

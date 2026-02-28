@@ -2,3 +2,13 @@ acha chalo ab mujhe aik page bana ke do funnel k liye basically finance se relat
 
  or UI aisi na hoo ke text dikhe hi nhi jaise white bg pe gray-100 kr diya tu ajeeb hojata hai wo scene or aik cheez k or khayal rakhna k text na normal size ka rakhna hai na hi bhut chhota na hi bhut bara or layout bhi minimize rkhna hai or typeScript use nhi krni jsx use krni hai
 
+
+Create a professional, modern, and clean promotional image for a finance service package. Use a sleek two-color theme: #F22A5C (accent) and #1D2F52 (background/secondary). Include the company logo at the top-left corner. 
+
+The image should display the package information provided in JSON format below, in a clear, elegant, and organized way. Use modern fonts, balanced spacing, and subtle design elements to highlight the text without cluttering the image. Ensure hierarchy: the package name should be most prominent, the monthly price and discounted price clearly visible, subtitle next, followed by features as a clean bulleted list, and extra services in a smaller secondary style. Make the layout professional, visually appealing, and suitable for sending in emails.
+
+Display the following JSON data (replace [PACKAGE JSON] with actual package info):
+
+[PACKAGE JSON]
+
+Add subtle abstract shapes or graphic elements in the two-color theme to enhance professionalism. Ensure high resolution, sharp, and clean finish. Text should be fully legible and well-aligned, suitable for professional finance clients.

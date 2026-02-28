@@ -61,10 +61,10 @@ const AccessibilitySection = () => {
 
               {/* CTA Button */}
               <div className="pt-6">
-                <Link href="/lead-form" className="px-8 py-4 bg-[#1D2F52] text-white rounded-2xl font-bold hover:shadow-2xl hover:shadow-[#1D2F52]/30 transition-all flex items-center gap-3 group">
+                <a href="/" className="px-8 py-4 bg-[#1D2F52] text-white rounded-2xl font-bold hover:shadow-2xl hover:shadow-[#1D2F52]/30 transition-all flex items-center gap-3 group">
                   Start Now
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
-                </Link>
+                </a>
               </div>
             </motion.div>
           </div>

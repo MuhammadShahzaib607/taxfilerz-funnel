@@ -71,12 +71,12 @@ const InvoiceShowcase = () => {
 
               {/* Action Buttons */}
               <div className="flex flex-wrap gap-4">
-                <Link href="/lead-form" className="px-8 py-4 bg-[#1D2F52] text-white rounded-2xl font-bold hover:bg-[#1D2F52]/90 transition-all shadow-lg shadow-[#1D2F52]/20 active:scale-95">
+                <a href="/" className="px-8 py-4 bg-[#1D2F52] text-white rounded-2xl font-bold hover:bg-[#1D2F52]/90 transition-all shadow-lg shadow-[#1D2F52]/20 active:scale-95">
                   Start Invoicing Now
-                </Link>
-                <Link href="/services" className="px-8 py-4 border-2 border-gray-100 text-[#1D2F52] rounded-2xl font-bold hover:bg-gray-50 transition-all active:scale-95">
+                </a>
+                <a href="/" className="px-8 py-4 border-2 border-gray-100 text-[#1D2F52] rounded-2xl font-bold hover:bg-gray-50 transition-all active:scale-95">
                   See How It Works
-                </Link>
+                </a>
               </div>
 
               {/* Feature Trust Badges */}
