@@ -52,9 +52,6 @@ const HeroSection = () => {
                 <a href="/" className="w-full sm:w-auto px-8 py-4 bg-[#1D2F52] text-white rounded-xl font-bold hover:bg-[#F22A5C] transition-all duration-300 shadow-xl shadow-[#1D2F52]/20">
                   Start Your Consultation
                 </a>
-                <a href="/" className="w-full sm:w-auto px-8 py-4 border-2 border-[#1D2F52]/10 text-[#1D2F52] rounded-xl font-bold hover:border-[#F22A5C] hover:text-[#F22A5C] transition-all duration-300">
-                  View Our Services
-                </a>
               </div>
 
               {/* Trust Badges / Stats */}
