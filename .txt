@@ -12,3 +12,15 @@ Display the following JSON data (replace [PACKAGE JSON] with actual package info
 [PACKAGE JSON]
 
 Add subtle abstract shapes or graphic elements in the two-color theme to enhance professionalism. Ensure high resolution, sharp, and clean finish. Text should be fully legible and well-aligned, suitable for professional finance clients.
+
+Partners:
+Afeef
+K-Electric
+Bake Parlor
+GulAhmed
+Hobnob Bakeries
+Sami foundation
+Super Nova
+Tufail Chemical
+Tufail Multi Chem 
+Alkaram Studio

@@ -10,6 +10,7 @@ import UrgencyBanner from "../components/ads-home-components/UrgencyBanner"
 import AccessibilitySection from "../components/ads-home-components/AccessibilitySection"
 import SolutionSection from "../components/ads-home-components/SolutionSection"
 import PricingFunnel from "../components/ads-home-components/PricingFunnel"
+import PartnerSlider from "../components/ads-home-components/PartnerSlider"
 import FinalCTA from "../components/ads-home-components/FinalCTA"
 import LeadModal from "../components/ads-home-components/LeadModal"
 import Footer from "../components/Footer"
@@ -29,6 +30,7 @@ const HomeComp = () => {
  <AccessibilitySection />
  <SolutionSection />
  {/* <PricingFunnel /> */}
+ <PartnerSlider />
  <FinalCTA />
  <Footer /> 
  </>
