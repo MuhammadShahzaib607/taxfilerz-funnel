@@ -3,9 +3,8 @@ import AdminAuthModal from "../components/DashboardLogin"
 import React, { useState, useEffect } from 'react';
 import {
   LayoutDashboard, Search, Play, Square, CheckCircle, Clock, Menu, X,
-  Users, Filter, TrendingUp, Loader2, Trash2, CheckCircle2, AlertCircle, 
-  ChevronRight, ArrowUpRight, DollarSign, ShieldCheck,
-  Inbox, ChevronDown, Loader, XCircle, RotateCw
+  Users, Loader2, Trash2, ShieldCheck,
+  Inbox, ChevronDown, XCircle
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -95,17 +94,31 @@ export default function TaxFilerzDashboard() {
   };
 
   // --- FILTERING LOGIC ---
-  const filteredLeads = leads.filter(lead => {
-    const nameMatch = lead.fullname.toLowerCase().includes(searchTerm.toLowerCase());
-    const emailMatch = lead.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchSearch = nameMatch || emailMatch;
+ const filteredLeads = leads.filter((lead) => {
+  const nameMatch = lead.fullname?.toLowerCase().includes(searchTerm.toLowerCase());
+  const emailMatch = lead.email?.toLowerCase().includes(searchTerm.toLowerCase());
+  const matchSearch = nameMatch || emailMatch;
 
-    if (activeTab === 'Confirm') return lead.isOrderConfirmed === 'Confirm' && matchSearch;
-    if (activeTab === 'Pending') return (lead.isOrderConfirmed === 'Pending' || !lead.isOrderConfirmed) && matchSearch;
-    if (activeTab === 'Start') return lead.sendMessages === true && matchSearch;
-    if (activeTab === 'Stop') return lead.sendMessages === false && matchSearch;
-    return matchSearch;
-  });
+  if (activeTab === 'Confirm Orders')
+    return lead.isOrderConfirmed === 'Confirm' && matchSearch;
+
+  if (activeTab === 'Pending Orders')
+    return (lead.isOrderConfirmed === 'Pending' || !lead.isOrderConfirmed) && matchSearch;
+
+  if (activeTab === 'In Process Orders')
+    return lead.isOrderConfirmed === 'InProcess' && matchSearch;
+
+  if (activeTab === 'Reject Orders')
+    return lead.isOrderConfirmed === 'Reject' && matchSearch;
+
+  if (activeTab === 'Email Start')
+    return lead.sendMessages === true && matchSearch;
+
+  if (activeTab === 'Email Stop')
+    return lead.sendMessages === false && matchSearch;
+
+  return matchSearch;
+});
 
   // Status Style Helper
   const getStatusStyles = (status) => {
@@ -156,10 +169,12 @@ export default function TaxFilerzDashboard() {
           {[
             { name: 'Dashboard', icon: LayoutDashboard },
             { name: 'Search', icon: Search },
-            { name: 'Start', icon: Play },
-            { name: 'Stop', icon: Square },
-            { name: 'Confirm', icon: CheckCircle },
-            { name: 'Pending', icon: Clock },
+            { name: 'Email Start', icon: Play },
+            { name: 'Email Stop', icon: Square },
+            { name: 'Confirm Orders', icon: CheckCircle },
+            { name: 'Pending Orders', icon: Clock },
+            { name: 'In Process Orders', icon: Loader2 },
+            { name: 'Reject Orders', icon: XCircle },
           ].map((item) => (
             <button
               key={item.name}
