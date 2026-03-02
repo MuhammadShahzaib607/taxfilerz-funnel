@@ -98,13 +98,13 @@ const TaxfilerzChatBot = () => {
                           </div>
                           
                           {/* Pricing */}
-                          <div className="mb-4">
+                          {/* <div className="mb-4">
                              <p className="text-[#F22A5C] font-black text-2xl">
                                 PKR {(msg.details.discounted || msg.details.discountedPrice || msg.details.monthly || msg.details.price).toLocaleString()}
                                 <span className="text-xs text-gray-300 font-medium lowercase"> /period</span>
                              </p>
                              {msg.details.setup && <p className="text-[11px] text-blue-600 font-black mt-1 uppercase">Setup Fee: PKR {msg.details.setup.toLocaleString()}</p>}
-                          </div>
+                          </div> */}
 
                           {/* Feature Categories Tags */}
                           {msg.details.featureCategory && (

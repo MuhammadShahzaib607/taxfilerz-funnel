@@ -137,7 +137,7 @@ const LeadModal = () => {
                       
                       {/* Discounted Pricing Section */}
                       <div className="mb-3">
-                        <div className="text-[18px] font-bold text-gray-400 line-through decoration-gray-400 opacity-60">
+                        {/* <div className="text-[18px] font-bold text-gray-400 line-through decoration-gray-400 opacity-60">
                           PKR {(currentPrice * 2).toLocaleString()}
                         </div>
 
@@ -148,7 +148,7 @@ const LeadModal = () => {
                         <div className="text-[#F22A5C] font-black text-xl leading-tight">
                             PKR {currentPrice.toLocaleString()}
                             <span className="text-xs text-gray-300 ml-1">/mo</span>
-                        </div>
+                        </div> */}
                       </div>
 
                       {p.setup && <div className="text-[9px] font-black text-blue-600 mb-3 bg-blue-50 p-1 px-2 rounded-md inline-block">ONE-TIME SETUP: PKR {p.setup.toLocaleString()}</div>}
