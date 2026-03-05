@@ -283,13 +283,13 @@ export default function TaxFilerzDashboard() {
 
     <div className="flex items-center gap-4">
       {/* --- ADDED DOWNLOAD PDF BUTTON --- */}
-      {/* <button 
+       <button 
         onClick={downloadPDF}
         className="hidden md:flex items-center gap-2 bg-white border border-gray-100 p-3 px-6 rounded-2xl shadow-sm text-[#F22A5C] font-black text-xs uppercase tracking-widest hover:bg-rose-50 transition-all active:scale-95 group"
       >
         <Download size={18} className="group-hover:bounce" />
         Export PDF
-      </button> */}
+      </button>
 
       {/* Admin Profile */}
       <div className="flex items-center gap-4 bg-white p-2 pr-6 rounded-3xl shadow-sm border border-gray-100">
