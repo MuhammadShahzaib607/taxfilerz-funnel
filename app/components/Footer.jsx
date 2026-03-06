@@ -12,7 +12,7 @@ import Link from 'next/link';
 const socialLinks =  [
   {
     name: 'Home',
-    link: '/'
+    link: '/home'
   },
   {
     name: 'Services',
@@ -20,7 +20,7 @@ const socialLinks =  [
   },
   {
     name: 'Form',
-    link: '/lead-form'
+    link: '/home'
   },
   {
     name: 'AI Assistant',
@@ -65,7 +65,7 @@ const Footer = () => {
               {socialLinks.map((link) => (
                 <li key={link.name} className="group flex items-center gap-2 text-gray-300 hover:text-[#F22A5C] transition-colors cursor-pointer text-sm">
                   <HiChevronRight className="text-[#F22A5C]" />
-                  <Link href={link.link}>{link.name}</Link>
+                  <a href={link.link}>{link.name}</a>
                 </li>
               ))}
             </ul>

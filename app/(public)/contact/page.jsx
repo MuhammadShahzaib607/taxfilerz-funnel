@@ -1,8 +1,8 @@
 "use client"
 import React from 'react';
 import { motion } from 'framer-motion';
-import Navbar from "../components/Navbar.jsx"
-import Footer from "../components/Footer.jsx"
+import Navbar from "../../components/Navbar.jsx"
+import Footer from "../../components/Footer.jsx"
 import { HiOutlineMail, HiOutlinePhone, HiOutlineLocationMarker, HiOutlineGlobeAlt } from 'react-icons/hi';
 
 const ContactPage = () => {

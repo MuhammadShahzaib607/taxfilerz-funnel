@@ -2,8 +2,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { HiCheck, HiOutlineLibrary, HiOutlineDocumentText, HiOutlineDesktopComputer } from 'react-icons/hi';
-import Navbar from '../components/Navbar';
-import Footer from '../components/Footer';
+import Navbar from '../../components/Navbar';
+import Footer from '../../components/Footer';
 
 const ServicesPage = () => {
   // Data strictly based on your uploaded images

@@ -42,13 +42,9 @@ const FinalCTA = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <a href="/" className="w-full sm:w-auto px-10 py-5 bg-[#F22A5C] text-white rounded-2xl font-black text-lg hover:shadow-[0_20px_40px_-10px_rgba(242,42,92,0.5)] transition-all active:scale-95 flex items-center justify-center gap-3 group">
+              <a href="/home" className="w-full sm:w-auto px-10 py-5 bg-[#F22A5C] text-white rounded-2xl font-black text-lg hover:shadow-[0_20px_40px_-10px_rgba(242,42,92,0.5)] transition-all active:scale-95 flex items-center justify-center gap-3 group">
                 Get Started Now
                 <HiArrowRight className="group-hover:translate-x-2 transition-transform" />
-              </a>
-              
-              <a href="/" className="w-full sm:w-auto px-10 py-5 border-2 border-white/20 text-white rounded-2xl font-black text-lg hover:bg-white/10 transition-all">
-                Book a Free Demo
               </a>
             </div>
 

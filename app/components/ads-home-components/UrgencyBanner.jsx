@@ -82,7 +82,7 @@ const UrgencyBanner = () => {
               ))}
             </div>
 
-            <a href="/" className="group w-full relative flex items-center justify-center gap-3 bg-[#F22A5C] text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all hover:bg-[#d92351] hover:shadow-[0_20px_40px_-10px_rgba(242,42,92,0.4)] active:scale-95">
+            <a href="/home" className="group w-full relative flex items-center justify-center gap-3 bg-[#F22A5C] text-white py-5 rounded-2xl font-black text-xs uppercase tracking-[0.3em] transition-all hover:bg-[#d92351] hover:shadow-[0_20px_40px_-10px_rgba(242,42,92,0.4)] active:scale-95">
               Claim Offer Now
               <HiArrowRight className="text-lg transition-transform group-hover:translate-x-2" />
             </a>

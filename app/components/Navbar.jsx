@@ -36,8 +36,8 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Home', href: '/' },
-    { name: 'Form', href: '/' },
+    { name: 'Home', href: '/home' },
+    { name: 'Form', href: '/home' },
     { name: 'AI Assistant', href: '/chatbot' },
     { name: 'Contact', href: '/contact' },
   ];
@@ -79,7 +79,7 @@ const Navbar = () => {
           <div className="flex justify-between items-center h-20">
             
             {/* Logo Section */}
-            <Link href="/" className="flex items-center gap-3 shrink-0">
+            <Link href="/home" className="flex items-center gap-3 shrink-0">
               <div className="relative w-10 h-10">
                 <img 
                   src="/logo.png" 
@@ -107,7 +107,7 @@ const Navbar = () => {
 
             {/* Desktop Button */}
             <div className="hidden md:block">
-              <a href="/" className="bg-[#1D2F52] hover:bg-[#F22A5C] text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all shadow-lg hover:shadow-[#F22A5C]/20 active:scale-95">
+              <a href="/home" className="bg-[#1D2F52] hover:bg-[#F22A5C] text-white px-8 py-3 rounded-xl font-black text-[10px] uppercase tracking-[0.2em] transition-all shadow-lg hover:shadow-[#F22A5C]/20 active:scale-95">
                 Request Proposal
               </a>
             </div>

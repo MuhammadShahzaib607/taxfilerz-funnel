@@ -1,5 +1,5 @@
 "use client";
-import AdminAuthModal from "../components/DashboardLogin"
+import AdminAuthModal from "../../components/DashboardLogin"
 import React, { useState, useEffect } from 'react';
 import {
   LayoutDashboard, Search, Play, Square, CheckCircle, Clock, Menu, X,
@@ -26,10 +26,12 @@ export default function TaxFilerzDashboard() {
   const [noteText, setNoteText] = useState('');
   const [isSubmittingNote, setIsSubmittingNote] = useState(false);
 
+  // --- STATS CALCULATIONS ---
   const totalLeads = leads.length;
   const confirmedCount = leads.filter(l => l.isOrderConfirmed === "Confirm").length;
-  // Updated: Defaulting everything that isn't explicitly set to Pending
   const pendingCount = leads.filter(l => l.isOrderConfirmed === "Pending" || !l.isOrderConfirmed).length;
+  const inProcessCount = leads.filter(l => l.isOrderConfirmed === "InProcess").length;
+  const rejectedCount = leads.filter(l => l.isOrderConfirmed === "Reject").length;
 
   // Fetch Main Leads Data
   useEffect(() => {
@@ -66,34 +68,49 @@ export default function TaxFilerzDashboard() {
     }
   }, [activeTab]);
 
-  // --- PDF GENERATION FUNCTION ---
+  // --- UPDATED PDF GENERATION (ONLY PENDING WITH ALL DETAILS) ---
   const downloadPDF = () => {
-    const doc = new jsPDF();
-    const tableColumn = ["Client Name", "Email", "Service", "Package", "Status"];
+    const doc = new jsPDF('landscape'); // Landscape for better detail fitting
+    const tableColumn = ["Full Name", "Email", "Phone", "Service", "Package Name", "Amount", "Date", "Internal Notes"];
     const tableRows = [];
 
-    const dataToExport = activeTab === 'ContactInfo' ? filteredContactLeads : filteredLeads;
+    // Filter only Pending leads for PDF
+    const pendingLeadsToExport = leads.filter(l => l.isOrderConfirmed === "Pending" || !l.isOrderConfirmed);
 
-    dataToExport.forEach(lead => {
+    pendingLeadsToExport.forEach(lead => {
+      // Formatting notes for PDF cell
+      const notesString = lead.notes?.map(n => n.text).join(" | ") || "No notes";
+      
       const leadData = [
-        lead.fullname,
-        lead.email,
+        lead.fullname || 'N/A',
+        lead.email || 'N/A',
+        lead.phone || 'N/A',
         lead.service || 'N/A',
+        lead.packageName || lead.package?.packageName || 'Custom',
         lead.packageAmount || lead.package?.packageAmount || '0',
-        lead.isOrderConfirmed || 'Pending'
+        new Date(lead.createdAt).toLocaleDateString(),
+        notesString
       ];
       tableRows.push(leadData);
     });
 
-    doc.text(`TaxFilerz - ${activeTab} Report`, 14, 15);
+    doc.setFontSize(18);
+    doc.text("TaxFilerz - Pending Orders Full Report", 14, 15);
+    doc.setFontSize(10);
+    doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 22);
+
     autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
-      startY: 20,
+      startY: 28,
       theme: 'grid',
-      headStyles: { fillColor: [242, 42, 92] }
+      headStyles: { fillColor: [242, 42, 92], fontSize: 8 },
+      styles: { fontSize: 7, cellPadding: 2 },
+      columnStyles: {
+        7: { cellWidth: 50 } // Giving more width to Notes column
+      }
     });
-    doc.save(`TaxFilerz_${activeTab}_Report.pdf`);
+    doc.save(`Pending_Leads_Full_Report_${new Date().toLocaleDateString()}.pdf`);
   };
 
   const updateStatus = async (id, newStatus) => {
@@ -157,14 +174,13 @@ export default function TaxFilerzDashboard() {
     }
   };
 
-  // --- FIXED FILTERING LOGIC ---
+  // --- FILTERING LOGIC ---
   const filteredLeads = leads.filter((lead) => {
     const nameMatch = lead.fullname?.toLowerCase().includes(searchTerm.toLowerCase());
     const emailMatch = lead.email?.toLowerCase().includes(searchTerm.toLowerCase());
     const matchSearch = nameMatch || emailMatch;
 
     if (activeTab === 'Confirm Orders') return lead.isOrderConfirmed === 'Confirm' && matchSearch;
-    // Updated: Checking only for Pending or empty status
     if (activeTab === 'Pending Orders') return (lead.isOrderConfirmed === 'Pending' || !lead.isOrderConfirmed) && matchSearch;
     if (activeTab === 'In Process Orders') return lead.isOrderConfirmed === 'InProcess' && matchSearch;
     if (activeTab === 'Reject Orders') return lead.isOrderConfirmed === 'Reject' && matchSearch;
@@ -182,7 +198,6 @@ export default function TaxFilerzDashboard() {
       case 'Confirm': return 'bg-emerald-50 text-emerald-600 border-emerald-100';
       case 'InProcess': return 'bg-blue-50 text-blue-600 border-blue-100';
       case 'Reject': return 'bg-gray-100 text-gray-500 border-gray-200';
-      // Default / Pending is now strictly the signature Rose/Red color
       default: return 'bg-rose-50 text-[#F22A5C] border-rose-100';
     }
   };
@@ -206,7 +221,7 @@ export default function TaxFilerzDashboard() {
     <>
       <AdminAuthModal />
       
-      {/* --- ADD NOTE ODAL --- */}
+      {/* --- ADD NOTE MODAL --- */}
       {isNoteModalOpen && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-[#1D2F52]/40 backdrop-blur-md" onClick={() => setNoteModalOpen(false)}></div>
@@ -272,45 +287,46 @@ export default function TaxFilerzDashboard() {
 
         <main className="flex-1 h-screen overflow-y-auto p-6 md:p-12 relative">
           <header className="flex justify-between items-center mb-10">
-    <div>
-      <h2 className="text-3xl font-black text-[#1D2F52] tracking-tight">
-        {activeTab === "ContactInfo" ? "Inquiries & Leads" : activeTab}
-      </h2>
-      <p className="text-gray-400 font-bold text-xs uppercase tracking-widest mt-1">
-        Tax & Compliance Funnel
-      </p>
-    </div>
+            <div>
+              <h2 className="text-3xl font-black text-[#1D2F52] tracking-tight">
+                {activeTab === "ContactInfo" ? "Inquiries & Leads" : activeTab}
+              </h2>
+              <p className="text-gray-400 font-bold text-xs uppercase tracking-widest mt-1">
+                Tax & Compliance Funnel
+              </p>
+            </div>
 
-    <div className="flex items-center gap-4">
-      {/* --- ADDED DOWNLOAD PDF BUTTON --- */}
-       <button 
-        onClick={downloadPDF}
-        className="hidden md:flex items-center gap-2 bg-white border border-gray-100 p-3 px-6 rounded-2xl shadow-sm text-[#F22A5C] font-black text-xs uppercase tracking-widest hover:bg-rose-50 transition-all active:scale-95 group"
-      >
-        <Download size={18} className="group-hover:bounce" />
-        Export PDF
-      </button>
+            <div className="flex items-center gap-4">
+              <button 
+                onClick={downloadPDF}
+                className="hidden md:flex items-center gap-2 bg-white border border-gray-100 p-3 px-6 rounded-2xl shadow-sm text-[#F22A5C] font-black text-xs uppercase tracking-widest hover:bg-rose-50 transition-all active:scale-95 group"
+              >
+                <Download size={18} className="group-hover:bounce" />
+                Export PDF
+              </button>
 
-      {/* Admin Profile */}
-      <div className="flex items-center gap-4 bg-white p-2 pr-6 rounded-3xl shadow-sm border border-gray-100">
-        <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-[#1D2F52] to-[#121d33] flex items-center justify-center font-black text-white text-xs shadow-lg">
-          TF
-        </div>
-        <div className="hidden lg:block leading-none">
-          <p className="text-xs font-black text-[#1D2F52]">Chief Auditor</p>
-          <p className="text-[9px] text-[#F22A5C] font-bold uppercase mt-1 tracking-tighter">
-            Verified Admin
-          </p>
-        </div>
-      </div>
-    </div>
-  </header>
+              <div className="flex items-center gap-4 bg-white p-2 pr-6 rounded-3xl shadow-sm border border-gray-100">
+                <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-[#1D2F52] to-[#121d33] flex items-center justify-center font-black text-white text-xs shadow-lg">
+                  TF
+                </div>
+                <div className="hidden lg:block leading-none">
+                  <p className="text-xs font-black text-[#1D2F52]">Chief Auditor</p>
+                  <p className="text-[9px] text-[#F22A5C] font-bold uppercase mt-1 tracking-tighter">
+                    Verified Admin
+                  </p>
+                </div>
+              </div>
+            </div>
+          </header>
 
+          {/* --- UPDATED CARDS SECTION --- */}
           {activeTab === 'Dashboard' && (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-10">
               <StatsCard title="Total Clients" val={loading ? "..." : totalLeads} icon={Users} colorClass="bg-blue-50 text-blue-600" />
-              <StatsCard title="Tax Confirmed" val={loading ? "..." : confirmedCount} icon={ShieldCheck} colorClass="bg-emerald-50 text-emerald-600" onClick={() => setActiveTab('Confirm Orders')} />
-              <StatsCard title="Pending Review" val={loading ? "..." : pendingCount} icon={Clock} colorClass="bg-rose-50 text-[#F22A5C]" onClick={() => setActiveTab('Pending Orders')} />
+              <StatsCard title="Confirmed" val={loading ? "..." : confirmedCount} icon={ShieldCheck} colorClass="bg-emerald-50 text-emerald-600" onClick={() => setActiveTab('Confirm Orders')} />
+              <StatsCard title="Pending" val={loading ? "..." : pendingCount} icon={Clock} colorClass="bg-rose-50 text-[#F22A5C]" onClick={() => setActiveTab('Pending Orders')} />
+              <StatsCard title="In Process" val={loading ? "..." : inProcessCount} icon={Loader2} colorClass="bg-indigo-50 text-indigo-600" onClick={() => setActiveTab('In Process Orders')} />
+              <StatsCard title="Rejected" val={loading ? "..." : rejectedCount} icon={XCircle} colorClass="bg-gray-100 text-gray-500" onClick={() => setActiveTab('Reject Orders')} />
             </div>
           )}
 
@@ -351,7 +367,7 @@ export default function TaxFilerzDashboard() {
                         <th className="px-10 py-6">Billing / Plan</th>
                       </>
                     )}
-                    {activeTab === "ContactInfo" ? null : <th className="px-10 py-6 text-center">Actions</th>}
+                    {activeTab === "ContactInfo" ? null : <th className="px-10 py-6 text-center">Actions / Notes</th>}
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50">
@@ -412,14 +428,19 @@ export default function TaxFilerzDashboard() {
                               </div>
                             )}
                             {activeTab !== "ContactInfo" && (
-                              <button onClick={() => activeTab === 'Dashboard' ? (setSelectedLeadId(lead._id), setNoteModalOpen(true)) : deleteLead(lead._id)} className="p-2.5 rounded-xl bg-white cursor-pointer text-gray-300 border border-gray-100 hover:text-[#F22A5C] hover:border-rose-100 hover:bg-rose-50 transition-all shadow-sm">
-                                {activeTab === 'Dashboard' ? <Plus size={16} /> : <Trash2 size={16} />}
+                              <button onClick={() => activeTab === 'Dashboard' || activeTab === 'Pending Orders' || activeTab === 'Confirm Orders' || activeTab === 'In Process Orders' || activeTab === 'Reject Orders' ? (setSelectedLeadId(lead._id), setNoteModalOpen(true)) : deleteLead(lead._id)} className="p-2.5 rounded-xl bg-white cursor-pointer text-gray-300 border border-gray-100 hover:text-[#F22A5C] hover:border-rose-100 hover:bg-rose-50 transition-all shadow-sm">
+                                <Plus size={16} />
                               </button>
+                            )}
+                            {activeTab !== "ContactInfo" && activeTab !== "Dashboard" && (
+                               <button onClick={() => deleteLead(lead._id)} className="p-2.5 rounded-xl bg-white cursor-pointer text-gray-300 border border-gray-100 hover:text-[#F22A5C] hover:border-rose-100 hover:bg-rose-50 transition-all shadow-sm">
+                                 <Trash2 size={16} />
+                               </button>
                             )}
                           </div>
                         </td>
                       </tr>
-                      {activeTab === 'Dashboard' && lead.notes && lead.notes.length > 0 && (
+                      {(activeTab === 'Dashboard' || activeTab === 'Pending Orders' || activeTab === 'Confirm Orders' || activeTab === 'In Process Orders' || activeTab === 'Reject Orders') && lead.notes && lead.notes.length > 0 && (
                         <tr>
                           <td colSpan="4" className="px-14 py-4 bg-gray-50/20">
                             <div className="flex flex-wrap gap-2">

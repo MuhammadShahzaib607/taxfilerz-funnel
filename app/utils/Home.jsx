@@ -21,9 +21,9 @@ const HomeComp = () => {
  <LeadModal />
  <Navbar /> 
  <HeroSection /> 
- <DashboardFeature /> 
+ <DashboardFeature />
  <ServicesSection /> 
- <FeaturesSection /> 
+ <FeaturesSection />
  <InvoiceShowcase />
  <FinanceFeatures /> 
  <UrgencyBanner />

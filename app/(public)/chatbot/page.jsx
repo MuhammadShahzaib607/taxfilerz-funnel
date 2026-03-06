@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { HiOutlineRefresh, HiCheckCircle, HiLightningBolt } from 'react-icons/hi';
 import { FaWhatsapp } from 'react-icons/fa';
 import { RiAddCircleFill } from 'react-icons/ri'; // New icon for extras
-import Navbar from "../components/Navbar.jsx"
-import Footer from "../components/Footer.jsx"
-import { serviceData } from '../utils/packages.js';
+import Navbar from "../../components/Navbar.jsx"
+import Footer from "../../components/Footer.jsx"
+import { serviceData } from '../../utils/packages.js';
 
 const TaxfilerzChatBot = () => {
   const [messages, setMessages] = useState([

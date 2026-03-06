@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import FloatingActionButtons from "./components/FloatingActionButtons"
+// import FloatingActionButtons from "./components/FloatingActionButtons"
 import "./globals.css";
 
 const geistSans = Geist({
@@ -35,7 +35,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <FloatingActionButtons />
+        {/* <FloatingActionButtons /> */}
         {children}
       </body>
     </html>
