@@ -68,49 +68,108 @@ export default function TaxFilerzDashboard() {
     }
   }, [activeTab]);
 
-  // --- UPDATED PDF GENERATION (ONLY PENDING WITH ALL DETAILS) ---
+  // --- UPDATED PDF GENERATION (SMART FILTERING & CATEGORIZATION) ---
   const downloadPDF = () => {
-    const doc = new jsPDF('landscape'); // Landscape for better detail fitting
-    const tableColumn = ["Full Name", "Email", "Phone", "Service", "Package Name", "Amount", "Date", "Internal Notes"];
-    const tableRows = [];
+    const doc = new jsPDF('landscape');
+    const timestamp = new Date().toLocaleString();
+    
+    // All Columns Required
+    const tableColumn = ["Full Name", "Email", "Phone", "Service", "Amount", "Status", "Date", "Internal Notes"];
 
-    // Filter only Pending leads for PDF
-    const pendingLeadsToExport = leads.filter(l => l.isOrderConfirmed === "Pending" || !l.isOrderConfirmed);
-
-    pendingLeadsToExport.forEach(lead => {
-      // Formatting notes for PDF cell
-      const notesString = lead.notes?.map(n => n.text).join(" | ") || "No notes";
-      
-      const leadData = [
+    // Helper to format rows
+    const prepareRows = (dataList) => {
+      return dataList.map(lead => [
         lead.fullname || 'N/A',
         lead.email || 'N/A',
         lead.phone || 'N/A',
         lead.service || 'N/A',
-        lead.packageName || lead.package?.packageName || 'Custom',
         lead.packageAmount || lead.package?.packageAmount || '0',
+        lead.isOrderConfirmed || 'Pending',
         new Date(lead.createdAt).toLocaleDateString(),
-        notesString
+        lead.notes?.map(n => n.text).join(" | ") || "No notes"
+      ]);
+    };
+
+    if (activeTab === 'Dashboard') {
+      // --- SCENE: FULL REPORT (Categorized) ---
+      doc.setFontSize(20);
+      doc.setTextColor(29, 47, 82); // Dark Blue
+      doc.text("TaxFilerz - Master Business Report", 14, 15);
+      doc.setFontSize(10);
+      doc.text(`Generated on: ${timestamp}`, 14, 22);
+
+      let finalY = 30;
+      const categories = [
+        { label: 'Pending', key: 'Pending', color: [242, 42, 92] }, // Rose
+        { label: 'Confirm', key: 'Confirm', color: [16, 185, 129] }, // Emerald
+        { label: 'In Process', key: 'InProcess', color: [79, 70, 229] }, // Indigo
+        { label: 'Reject', key: 'Reject', color: [107, 114, 128] } // Gray
       ];
-      tableRows.push(leadData);
-    });
 
-    doc.setFontSize(18);
-    doc.text("TaxFilerz - Pending Orders Full Report", 14, 15);
-    doc.setFontSize(10);
-    doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 22);
+      categories.forEach((cat) => {
+        const filtered = leads.filter(l => 
+          cat.key === 'Pending' 
+          ? (l.isOrderConfirmed === 'Pending' || !l.isOrderConfirmed) 
+          : l.isOrderConfirmed === cat.key
+        );
 
-    autoTable(doc, {
-      head: [tableColumn],
-      body: tableRows,
-      startY: 28,
-      theme: 'grid',
-      headStyles: { fillColor: [242, 42, 92], fontSize: 8 },
-      styles: { fontSize: 7, cellPadding: 2 },
-      columnStyles: {
-        7: { cellWidth: 50 } // Giving more width to Notes column
+        if (filtered.length > 0) {
+          doc.setFontSize(14);
+          doc.setTextColor(cat.color[0], cat.color[1], cat.color[2]);
+          doc.text(`TaxFilerz ${cat.label} Orders Full Report`, 14, finalY);
+
+          autoTable(doc, {
+            head: [tableColumn],
+            body: prepareRows(filtered),
+            startY: finalY + 5,
+            theme: 'grid',
+            headStyles: { fillColor: cat.color, fontSize: 8 },
+            styles: { fontSize: 7, cellPadding: 2 },
+            columnStyles: { 7: { cellWidth: 60 } }
+          });
+          finalY = doc.lastAutoTable.finalY + 15;
+          
+          // Add new page if space is low
+          if (finalY > 170) {
+            doc.addPage();
+            finalY = 20;
+          }
+        }
+      });
+    } else {
+      // --- SCENE: TAB SPECIFIC REPORT ---
+      const tabTitle = activeTab.replace('Orders', '').trim();
+      let exportData = [];
+
+      if (activeTab === 'ContactInfo') {
+        exportData = contactLeads;
+      } else if (activeTab === 'Pending Orders') {
+        exportData = leads.filter(l => l.isOrderConfirmed === "Pending" || !l.isOrderConfirmed);
+      } else if (activeTab === 'Confirm Orders') {
+        exportData = leads.filter(l => l.isOrderConfirmed === "Confirm");
+      } else if (activeTab === 'In Process Orders') {
+        exportData = leads.filter(l => l.isOrderConfirmed === "InProcess");
+      } else if (activeTab === 'Reject Orders') {
+        exportData = leads.filter(l => l.isOrderConfirmed === "Reject");
       }
-    });
-    doc.save(`Pending_Leads_Full_Report_${new Date().toLocaleDateString()}.pdf`);
+
+      doc.setFontSize(18);
+      doc.text(`TaxFilerz - ${tabTitle} Report`, 14, 15);
+      doc.setFontSize(10);
+      doc.text(`Generated on: ${timestamp}`, 14, 22);
+
+      autoTable(doc, {
+        head: [tableColumn],
+        body: prepareRows(exportData),
+        startY: 28,
+        theme: 'grid',
+        headStyles: { fillColor: [29, 47, 82], fontSize: 8 },
+        styles: { fontSize: 7, cellPadding: 2 },
+        columnStyles: { 7: { cellWidth: 70 } }
+      });
+    }
+
+    doc.save(`TaxFilerz_${activeTab.replace(' ', '_')}_Report_${new Date().toLocaleDateString()}.pdf`);
   };
 
   const updateStatus = async (id, newStatus) => {
@@ -302,7 +361,7 @@ export default function TaxFilerzDashboard() {
                 className="hidden md:flex items-center gap-2 bg-white border border-gray-100 p-3 px-6 rounded-2xl shadow-sm text-[#F22A5C] font-black text-xs uppercase tracking-widest hover:bg-rose-50 transition-all active:scale-95 group"
               >
                 <Download size={18} className="group-hover:bounce" />
-                Export PDF
+                Export {activeTab === 'Dashboard' ? 'Full Report' : activeTab}
               </button>
 
               <div className="flex items-center gap-4 bg-white p-2 pr-6 rounded-3xl shadow-sm border border-gray-100">
@@ -319,7 +378,7 @@ export default function TaxFilerzDashboard() {
             </div>
           </header>
 
-          {/* --- UPDATED CARDS SECTION --- */}
+          {/* --- DASHBOARD STATS --- */}
           {activeTab === 'Dashboard' && (
             <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 mb-10">
               <StatsCard title="Total Clients" val={loading ? "..." : totalLeads} icon={Users} colorClass="bg-blue-50 text-blue-600" />
